@@ -1,9 +1,9 @@
 /* ==========================================================================
    Mie Ayam Jawir - Official Website Logic
-   Based on Wireframe Guide (wireframe md.pdf) & Real Pluit Assets
+   Full Responsive Integration (iPhone, Tablet, Cinema Screen)
    ========================================================================== */
 
-// --- Initial Cart Data: Starts Empty (0 items) as requested ---
+// --- Initial Cart Data: Starts Empty (0 items) ---
 let cart = [];
 
 // --- Currency Formatter ---
@@ -16,6 +16,7 @@ function renderCart() {
     const orderSection = document.getElementById('daftar-pesanan');
     const container = document.getElementById('orderItemsContainer');
     const badge = document.getElementById('cartBadge');
+    const mobileCartCount = document.getElementById('mobileCartCount');
     const countBadge = document.getElementById('orderItemCountBadge');
     const totalDisplay = document.getElementById('totalPriceDisplay');
     
@@ -28,6 +29,7 @@ function renderCart() {
             badge.textContent = '0';
             badge.classList.add('is-zero');
         }
+        if (mobileCartCount) mobileCartCount.textContent = '0';
         if (countBadge) countBadge.textContent = '0 Menu';
         if (totalDisplay) totalDisplay.textContent = 'Rp0';
         container.innerHTML = '';
@@ -81,6 +83,7 @@ function renderCart() {
         badge.textContent = totalItems;
         badge.classList.remove('is-zero');
     }
+    if (mobileCartCount) mobileCartCount.textContent = totalItems;
     if (countBadge) countBadge.textContent = `${totalItems} Menu`;
     if (totalDisplay) totalDisplay.textContent = formatRupiah(totalPrice);
 }
@@ -275,8 +278,7 @@ function initHeroVideo() {
 
     // Autoplay handling
     video.play().catch(() => {
-        // Fallback if browser blocks autoplay
-        console.log('Autoplay muted waiting for user interaction');
+        console.log('Autoplay waiting for user gesture');
     });
 
     if (playBtn) {
@@ -404,6 +406,47 @@ function initAboutVideoPlayer() {
     }
 }
 
+// ==========================================================================
+// 3. MOBILE & TABLET DRAWER NAVIGATION
+// ==========================================================================
+function initMobileNavigation() {
+    const toggleBtn = document.getElementById('mobileMenuToggle');
+    const drawer = document.getElementById('mobileNavDrawer');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    const closeBtn = document.getElementById('mobileNavClose');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link, #mobileNavOrderBtn');
+
+    function openDrawer() {
+        drawer.classList.add('active');
+        backdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('active');
+        backdrop.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) toggleBtn.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            closeDrawer();
+
+            if (href === '#daftar-pesanan' && cart.length === 0) {
+                e.preventDefault();
+                showToast('Keranjang pesanan masih kosong. Yuk pilih menu favoritmu!');
+                const menuSec = document.getElementById('menu');
+                if (menuSec) menuSec.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+}
+
 // --- DOM Ready Initializer ---
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Inisialisasi Keranjang Kosong (Sembunyi)
@@ -415,26 +458,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Inisialisasi Video Player di Bagian About
     initAboutVideoPlayer();
 
-    // 4. Mobile Navigation Toggle
-    const mobileToggle = document.getElementById('mobileMenuToggle');
-    const navLinks = document.querySelector('.nav-links');
-    if (mobileToggle && navLinks) {
-        mobileToggle.addEventListener('click', () => {
-            const isDisplayed = navLinks.style.display === 'flex';
-            navLinks.style.display = isDisplayed ? 'none' : 'flex';
-            if (!isDisplayed) {
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '76px';
-                navLinks.style.left = '0';
-                navLinks.style.right = '0';
-                navLinks.style.background = '#FFFFFF';
-                navLinks.style.padding = '20px';
-                navLinks.style.borderBottom = '1px solid #E2E8F0';
-                navLinks.style.boxShadow = '0 10px 15px rgba(0,0,0,0.08)';
-            }
-        });
-    }
+    // 4. Inisialisasi Navigasi Mobile Drawer
+    initMobileNavigation();
 
     // 5. Smooth Anchor Link Scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -444,7 +469,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetElem = document.querySelector(targetId);
                 if (targetElem) {
                     e.preventDefault();
-                    // Jika mengklik navigasi ke daftar pesanan tapi keranjang masih kosong, beri tahu pengguna
                     if (targetId === '#daftar-pesanan' && cart.length === 0) {
                         showToast('Keranjang pesanan masih kosong. Silakan pilih menu!');
                         const menuSec = document.getElementById('menu');
