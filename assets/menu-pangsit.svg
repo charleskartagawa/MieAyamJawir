@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <rect width="400" height="300" rx="16" fill="#FDFBF7"/>
+  <!-- Bowl Outer -->
+  <path d="M80 140 C80 245 320 245 320 140 Z" fill="#FFFFFF" stroke="#E0D7D0" stroke-width="3"/>
+  <path d="M120 170 Q200 195 280 170" stroke="#D32F2F" stroke-width="4" fill="none"/>
+  <ellipse cx="200" cy="140" rx="120" ry="32" fill="#FFF9C4" stroke="#D7CCC8" stroke-width="2"/>
+  <ellipse cx="200" cy="143" rx="110" ry="27" fill="#FBC02D" opacity="0.75"/>
+  <!-- Noodles -->
+  <g stroke="#F5B041" stroke-width="4" fill="none" stroke-linecap="round">
+    <path d="M120 140 Q150 125 180 145 Q210 165 240 140 Q270 120 280 140"/>
+    <path d="M130 150 Q160 165 190 140 Q220 120 250 150"/>
+  </g>
+  <!-- Greens -->
+  <path d="M105 125 Q125 105 145 130 Q130 150 105 140 Z" fill="#2E7D32"/>
+  <!-- Chicken -->
+  <g fill="#6D3216">
+    <rect x="165" y="130" width="18" height="15" rx="3" transform="rotate(-6 174 137)"/>
+    <rect x="185" y="135" width="19" height="15" rx="3" transform="rotate(4 194 142)"/>
+  </g>
+  <!-- Pangsit Goreng Crispy 1 & 2 -->
+  <g>
+    <!-- Pangsit 1 -->
+    <polygon points="220,95 275,115 250,145 205,120" fill="#FFCA28" stroke="#FFA000" stroke-width="1.5"/>
+    <circle cx="235" cy="115" r="2.5" fill="#E65100"/>
+    <circle cx="245" cy="125" r="3" fill="#E65100"/>
+    <!-- Pangsit Rebus Soft Wonton -->
+    <path d="M245 130 C265 120 285 135 275 150 C260 160 235 155 245 130 Z" fill="#FFF9C4" stroke="#FFE082" stroke-width="1.5"/>
+    <ellipse cx="260" cy="140" rx="6" ry="4" fill="#D7CCC8"/>
+  </g>
+  <!-- Scallions -->
+  <ellipse cx="155" cy="140" rx="3" ry="1.5" fill="#388E3C"/>
+  <ellipse cx="205" cy="148" rx="3" ry="1.5" fill="#388E3C"/>
+  <!-- Steam -->
+  <path d="M185 105 Q175 80 190 60" stroke="#BBB" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M215 100 Q225 75 210 55" stroke="#BBB" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+</svg>
